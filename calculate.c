@@ -2,21 +2,15 @@
 
 int main() {
   int num1, num2;
+  int result = 0;
   char ch;
   
-  printf("enter number : ");
-  scanf("%d %c %d", num1, ch, num2);
+  printf("Enter number : ");
+  scanf("%d", &num1);
   
-}
-
-int ADD(){
-  int add=0;
+  printf("Enter number : ");
+  scanf("%d", &num2);
   
-  add=num1+num2;
-  
-}
-int MINUS(){
-  int minus=0;
-  
-  minus=num1-num2;
+  printf("Enter +, -, *, / : ");
+  scanf("%s", &ch);
 }
