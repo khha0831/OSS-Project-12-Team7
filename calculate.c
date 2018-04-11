@@ -15,3 +15,8 @@ int ADD(){
   add=num1+num2;
   
 }
+int MINUS(){
+  int minus=0;
+  
+  minus=num1-num2;
+}
