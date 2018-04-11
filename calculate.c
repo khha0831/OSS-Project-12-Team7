@@ -1,5 +1,10 @@
 #include <stdio.h>
 
+int add(int a, int b);
+int minus(int a, int b);
+int mul(int a, int b);
+int div(int a, int b);
+
 int main() {
   int num1, num2;
   int result = 0;
@@ -13,4 +18,36 @@ int main() {
   
   printf("Enter +, -, *, / : ");
   scanf("%s", &ch);
+}
+
+int add(int a, int b)
+{
+  int result1;
+  
+  result = a + b;
+  return result1;
+}
+
+int minus(int a, int b)
+{
+  int result1;
+  
+  result1 = a - b;
+  return result1;
+}
+
+int mul(int a, int b)
+{
+  int result1;
+  
+  result1 = a * b;
+  return result1;
+}
+
+int div(int a, int b)
+{
+  int result1;
+  
+  result1 = a / b;
+  return result1;
 }
