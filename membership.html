@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>로그인 페이지</title>
+</head>
+<body>
+	<form>
+	<table width="800">
+		<tr height="40">
+		<td align=center><b>회원가입</b></td>
+		</tr>
+	</table>
+
+	<table width="800" height="500" cellpadding="0">	
+		
+		<tr height="30">
+		<td width="15%">아이디</td>
+		<td><input type="text" name="ID" required>
+		<input type="button" id="check" value="중복확인">
+		</td>
+		</tr>
+		
+		<tr height="30">
+		<td width="15%">비밀번호</td>
+		<td><input type="password" name="Uear_pw" size="20px" required></td>
+		</tr>
+		
+		<tr height="30">
+		<td width="15%">비밀번호확인</td>
+		<td><input type="password" name="Uear_pw_Check" id="pwCheck" size="20px" required></td>
+		</tr>
+		
+		<tr height="30">
+		<td width="15%">이름</td>
+		<td><input type="text" name="name" required></td>
+		</tr>
+		
+		<tr height="30">
+		<td width="15%">생년월일</td>
+		<td><input type="date" name="birthday" required></td>
+		</tr>
+		
+		<tr height="30">
+		<td width="15%">휴대폰 번호</td>
+			<td>
+			<select id="phone" >
+                        <option value=""></option>
+                        <option value="010">010</option>
+                        <option value="011">011</option>
+                        <option value="016">016</option>
+                    </select>
+            - <input type="text" name="phone" id="phone" size="10" required>
+            - <input type="text" name="phone" id="phone" size="10" required>
+            </td>
+		</tr>
+		
+		<tr height="30">
+		<td width="15%">직업</td>
+		<td>
+		<select id="job">
+                        <option value="직업을 선택하세요">직업을 선택하세요</option>
+                        <option value="학생">학생</option>
+                        <option value="교수">교수</option>
+                        <option value="교내직원">교내직원</option>
+                    </select>
+		</td>
+		</tr>
+		
+		<tr height="30">
+		<td width="15%">성별</td>
+		<td><input type=radio name="sex" value="male" checked >남자
+			<input type=radio name="sex" value="female">여자
+		</td>
+		</tr>
+
+	</table>
+	<p align=center><input type=submit value="회원가입">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="취소"></p>
+	</form>
+
+</body>
+</html>
