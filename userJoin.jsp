@@ -32,7 +32,7 @@
 %>
 
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<a class="navbar-brand" href="index.jsp">회원가입</a>
+		<a class="navbar-brand" href="index.jsp">Team_7</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
 		<span class="navbar-toggler-icon"></span>
 		</button>
@@ -41,14 +41,17 @@
 			<li class="nav-item active">
 				<a class="nav-link" href="index.jsp">메인</a>
 			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="bbs.jsp">게시판</a>
+			</li>
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" id="dropdown" data-toggle="dropdown">
 					회원관리
 				</a>
 					<div class="dropdown-menu" aria-labelledby="dropdown">
-					
 <%
 	if(userID==null){
+	
 %>
 						<a class="dropdown-item" href="userLogin.jsp">로그인</a>
 						<a class="dropdown-item" href="userJoin.jsp">회원가입</a>
@@ -62,8 +65,8 @@
 
 					</div>			
 		</ul>
-		<form class="form-inline my-2 my-lg-0">
-			<input class="form-control mr-sm-2" type="search" placeholder="내용을 입력하세요." aria-label="search">
+		<form action="./index.jsp" method="get" class="form-inline my-2 my-lg-0">
+			<input type="text" name="search" class="form-control mr-sm-2" type="search" placeholder="내용을 입력하세요." aria-label="search">
 		 	<button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
 		</form>
 		</div>
@@ -84,9 +87,8 @@
 				<label>Email</label>
 				<input type="email" name="userEmail" class="form-control" required>
 			</div>
-			<button type="submit" class="btn btn-primary">로그인</button>
-		</form>
-	
+			<button type="submit" class="btn btn-primary">회원가입</button>
+		</form>	
 	</section>
 	
 	<footer class="bg-dark mt-4 p-5 text-center" style="color:#ffffff;">
