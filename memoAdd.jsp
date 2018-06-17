@@ -1,75 +1,114 @@
-<%@ page contentType="text/html;charset=euc-kr" pageEncoding="euc-kr" import="java.sql.*"%>
-<%
-request.setCharacterEncoding("euc-kr");
-%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-  <%
-   //µ¥ÀÌÅÍº£ÀÌ½º¸¦ ¿¬°áÇÏ´Â °ü·Ã º¯¼ö¸¦ ¼±¾ğÇÑ´Ù
-  Connection conn= null;
-  Statement stmt = null;
-  PreparedStatement pstmt = null;
-   //µ¥ÀÌÅÍº£ÀÌ½º¸¦ ¿¬°áÇÏ´Â °ü·Ã Á¤º¸¸¦ ¹®ÀÚ¿­·Î ¼±¾ğÇÑ´Ù.
-  String jdbc_driver= "com.mysql.jdbc.Driver"; //JDBC µå¶óÀÌ¹öÀÇ Å¬·¡½º °æ·Î
-  String jdbc_url= "jdbc:mysql://localhost:3306/cal";  //Á¢¼ÓÇÏ·Á´Â µ¥ÀÌÅÍº£ÀÌ½ºÀÇ Á¤º¸
-   //JDBC µå¶óÀÌ¹ö Å¬·¡½º¸¦ ·ÎµåÇÑ´Ù.
-  Class.forName("com.mysql.jdbc.Driver");
-   //µ¥ÀÌÅÍº£ÀÌ½º ¿¬°á Á¤º¸¸¦ ÀÌ¿ëÇØ¼­ Connection ÀÎ½ºÅÏ½º¸¦ È®º¸ÇÑ´Ù.
-  conn= DriverManager.getConnection("jdbc:mysql://localhost:3306/cal?user=root&password=123456");
-  if (conn== null) {
-   out.println("No connection is made!");
-  }
-  %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.io.PrintWriter" %>
+<%@ page import="user.UserDAO" %>
+<%@ page import="util.DatabaseUtil" %>
+
+<!DOCTYPE html>
 <html>
- <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-  <title>ÀÏÁ¤ Ãß°¡</title>
- </head>
- <body>
-  <center>
-  <H2>ÀÏÁ¤ Ãß°¡</H2>
-  <HR>
-  <form name=memoAdd method=post action=memoAdd.jsp>
-   <input type=text name=memoYear size=4>³â
-   <input type=text name=memoMonth size=2>¿ù
-   <input type=text name=memoDay size=2>ÀÏ
-   ³»¿ë : <input type=text name=memoContents>
-   <input type=submit value="Ãß°¡">
-  </form>
-   <%
-   stmt = conn.createStatement();
-   if (request.getParameter("username") != null) {
-   String sql= "INSERT INTO CALENDARMEMO (CALENDARMEMO_YEAR, CALENDARMEMO_MONTH, CALENDARMEMO_DAY, CALENDARMEMO_CONTENTS) VALUES (";
-   sql+= request.getParameter("memoYear");
-   sql+= ", ";
-   sql+= request.getParameter("memoMonth");
-   sql+= ", ";
-   sql+= request.getParameter("memoDay");
-   sql+= ", \'";
-   sql+= request.getParameter("memoContents");
-   sql+= " \')";
-   // INSERT INTO jdbc_testVALUES (¡®È«±æµ¿¡¯, ¡®test@test.net¡¯)
-   stmt.executeUpdate(sql);
-   }
-/*select ¹®ÀåÀ»¹®ÀÚ¿­ÇüÅÂ·Î±¸¼ºÇÑ´Ù.
-  String sql= "SELECT username, email FROM jdbc_test";
-  pstmt= conn.prepareStatement(sql);
-  // select ¸¦¼öÇàÇÏ¸éµ¥ÀÌÅÍÁ¤º¸°¡ResultSetÅ¬·¡½ºÀÇÀÎ½ºÅÏ½º·Î¸®ÅÏ
-  ResultSet rs= pstmt.executeQuery();
-  int i= 1;
-  // ¸¶Áö¸·µ¥ÀÌÅÍ±îÁö¹İº¹ÇÔ.
-  while (rs.next()) {
-  out.print(i+ " : " + rs.getString(1) + " , ");
-  out.println(rs.getString("email") + "<BR>");
-  i++;
-  }
-  rs.close();*/
-  %>
-  <HR>
-  </center>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1,shrink-to-fit=no">
+<title>Insert title here</title>
+
+<!--ë¶€íŠ¸ìŠ¤íŠ¸ë© CSS ì¶”ê°€-->
+<link rel="stylesheet" href="./css/bootstrap.min.css">
+<!--ì»¤ìŠ¤í…€ CSS ì¶”ê°€-->
+<link rel="stylesheet" href="./css/custom.css">
+</head>
+<style>
+#sform {
+          display: inline-block;
+          text-align: center;
+        }
+</style>
+<body>
+<% 
+	String userID=null; 
+	if(session.getAttribute("userID") != null){
+	userID=(String)session.getAttribute("userID");	 
+	}
+	if(userID == null){
+		PrintWriter script=response.getWriter();
+		script.println("<script>"); 
+		script.println("alert('ë¡œê·¸ì¸ì„ í•´ì£¼ì„¸ìš”.');");
+		script.println("location.href='userLogin.jsp';");
+		script.println("</script>");
+		script.close();
+		return;	
+	}
+%>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="index.jsp">Team_7</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
+		<span class="navbar-toggler-icon"></span>
+		</button>
+		<div id="navbar" class="collapse navbar-collapse">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item">
+				<a class="nav-link" href="index.jsp">ë©”ì¸</a>
+			</li>
+			<li class="nav-item active">
+				<a class="nav-link" href="bbs.jsp">ê²Œì‹œíŒ</a>
+			</li>
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" id="dropdown" data-toggle="dropdown"> 	
+					íšŒì›ê´€ë¦¬
+				</a>
+					<div class="dropdown-menu" aria-labelledby="dropdown">
+<%
+	if(userID==null){
+	
+%>
+						<a class="dropdown-item" href="userLogin.jsp">ë¡œê·¸ì¸</a>
+						<a class="dropdown-item" href="userJoin.jsp">íšŒì›ê°€ì…</a>
+<%
+	} else{
+%>						
+						<a class="dropdown-item" href="userLogout.jsp">ë¡œê·¸ì•„ì›ƒ</a>
+<%
+	}
+%>						
+					</div>			
+		</ul>
+		<form action="./index.jsp" method="get" class="form-inline my-2 my-lg-0">
+			<input type="text" name="search" class="form-control mr-sm-2" type="search" placeholder="ë‚´ìš©ì„ ì…ë ¥í•˜ì„¸ìš”." aria-label="search">
+		 	<button class="btn btn-outline-success my-2 my-sm-0" type="submit">ê²€ìƒ‰</button>
+		</form>
+		</div>
+	</nav>
+<center>
+<form method=post class=form-inline action=calAction.jsp id=sform>
+	<table class="table table-striped" style="text-align: center;border:1px solid #dddddd">
+  		<thead>
+  			<H2>ì¼ì • ì¶”ê°€</H2>
+  		</thead>
+  		<tbody>
+  			<tr>
+  				<td>
+						<input type=text class=form-control style=text-align:right name=calendarmemo_year required>ë…„
+						<input type=text class=form-control style=text-align:right name=calendarmemo_month required>ì›”
+						<input type=text class=form-control style=text-align:right name=calendarmemo_day required>ì¼
+				</td>
+			</tr>
+			<tr>
+				<td><textarea type=text class=form-control name=calendarmemo_contents maxlength="2048" style="height:350px; width:900px" required></textarea></td>
+			</tr>
+		</tbody>
+	</table>
+	<input type=submit class="btn btn-primary" value="ì¶”ê°€">
+</form>
+</center>
+	<footer class="bg-dark mt-4 p-5 text-center" style="color:#ffffff;">
+		Copyright &copy; 2018 Team_7 All Rights Reserved.
+	</footer>
+<!-- ì œì´ì¿¼ë¦¬ ì¶”ê°€  -->
+<script src="./js/jquery.min.js"></script>
+<!-- íŒŒí¼ ì¶”ê°€  -->
+<script src="./js/popper.js"></script>
+<!-- ë¶€íŠ¸ìŠ¤íŠ¸ë© ìë°”ìŠ¤í¬ë¦½íŠ¸ ì¶”ê°€  -->
+<script src="./js/bootstrap.min.js"></script>
+
+
 </body>
 </html>
-   <%
-        //»ç¿ëÇÑ ÀÚ¿øÀ» ¹İ³³ÇÑ´Ù.
-       stmt.close();
-       conn.close();
-   %>
