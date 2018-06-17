@@ -3,7 +3,6 @@ package user;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
 import util.DatabaseUtil;
 
 public class UserDAO {
@@ -20,7 +19,9 @@ public class UserDAO {
 			if(rs.next()) {
 				if(rs.getString(1).equals(userPW)) {
 					return 1;
-				}else {
+				}
+				else 
+				{
 					return 0;
 				}
 			}
