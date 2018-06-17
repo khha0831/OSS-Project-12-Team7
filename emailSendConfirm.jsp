@@ -17,14 +17,14 @@
 <body>
 <% 
 	String userID=null; 
-	if(session.getAttribute("userID")!=null){
-	userID=(String)session.getAttribute("userID");	 
+	if(session.getAttribute("userID") != null){
+		userID=(String)session.getAttribute("userID");	 
 	}
 	if(userID == null){
 		PrintWriter script=response.getWriter();
 		script.println("<script>");
-		script.println("alert('로그인을 해주세요.');");
-		script.println("location.href='userLogin.jsp';");
+		script.println("alert('로그인이 된 상태입니다.');");
+		script.println("location.href='index.jsp';");
 		script.println("</script>");
 		script.close();
 		return;	
@@ -32,7 +32,7 @@
 %>
 
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<a class="navbar-brand" href="index.jsp">회원가입</a>
+		<a class="navbar-brand" href="index.jsp">Team_7</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
 		<span class="navbar-toggler-icon"></span>
 		</button>
@@ -41,12 +41,14 @@
 			<li class="nav-item active">
 				<a class="nav-link" href="index.jsp">메인</a>
 			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="bbs.jsp">게시판</a>
+			</li>
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" id="dropdown" data-toggle="dropdown">
 					회원관리
 				</a>
 					<div class="dropdown-menu" aria-labelledby="dropdown">
-					
 <%
 	if(userID==null){
 	
@@ -56,15 +58,15 @@
 <%
 	} else{
 %>						
-						<a class="dropdown-item" href="userLogout">로그아웃</a>
+						<a class="dropdown-item" href="userLogout.jsp">로그아웃</a>
 <%
 	}
 %>						
 
 					</div>			
 		</ul>
-		<form class="form-inline my-2 my-lg-0">
-			<input class="form-control mr-sm-2" type="search" placeholder="내용을 입력하세요." aria-label="search">
+		<form action="./index.jsp" method="get" class="form-inline my-2 my-lg-0">
+			<input type="text" name="search" class="form-control mr-sm-2" type="search" placeholder="내용을 입력하세요." aria-label="search">
 		 	<button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
 		</form>
 		</div>
